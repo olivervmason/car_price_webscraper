@@ -2,7 +2,7 @@
 
 ## Background and aim
 
-Having spoken with friends and colleagues about their experiences buying second hand cars in New Zealand, I have repeatedly heard that all other things being equal, second hand cars can be found cheaper in Auckland than in the rest of the country.
+Having spoken with friends and colleagues about their experiences buying second hand cars in New Zealand, I had repeatedly heard that all other things being equal, second hand cars can be found cheaper in Auckland than in the rest of the country.
 
 Presumably this would be due to the fact that ships offload their cargo in Ports of Auckland, and the much larger population of the city results in a greater supply and therefore lower prices.
 
@@ -52,11 +52,11 @@ From this it was determined that the top 5 listings accounted for approximately 
 
 ## Part 2 - Listings Webscraper
 
-A webscraper was built to iterate through each page number for the named brand. 
+A webscraper was built to iterate through each page number for the named brand, with a pause between each page to avoid overloading the server. 
 
 `'https://www.trademe.co.nz/a/motors/cars/{brand}?page={X}'`
 
-Fortunately the summary page showing all listings contained all the following information:
+Fortunately, the group listings page showed all the information below:
 
 - Make and Model
 - Location
@@ -76,11 +76,11 @@ Data was saved in to single csv file for each manufactuerer, with one line per l
 
 ## Part 3 - Data cleansing and preparation
 
-The first step was to combine the files from the csv data in Part 2) since they would all need to undergo the same cleaning process. 
+The first step was to combine the files from the csv data in Part 2) since they would all need to undergo the same cleansing process. 
 
 The data in the original csv files had been formatted as much as possible, however further work was needed to:
 
-- Parse out details from single fields (e.g. title -> Year/age, make and model; engine -> engine size, fuel type, and gearbox)
+- Parse out details from single fields (e.g. 'title' -> Year and age, make and model; whilst 'engine' -> engine size, fuel type, and gearbox)
 
 - Correct errors (typos, e.g. one listing for a car supposedly built in 1888!)
 
@@ -88,14 +88,14 @@ The data in the original csv files had been formatted as much as possible, howev
 
 - Likewise it was decided to create 'bins' by which to group car ages.
 
-- The engine size was input differently for the same model (e.g. 1497cc and 1500cc are two ways users listed the same engine size). This needed to be homogenized by rounding to the nearest 100cc.
+- The engine size was input differently by users for the same model (e.g. 1497cc and 1500cc were listed for the same engine). This was homogenized by rounding the capacity to the nearest 100cc.
 
 - A string grouping all these like characteristics was created in order to make it possible to to an 'apples with apples' comparison between listings in different locations.
 
 
 ## Results analysis
 
-Initially, the number of listings per location was reviewed:
+Initially, the number of listings by location for the top 5 brands was reviewed:
 
 - Auckland - 13,862 listings
 - Other North Island - 6,164 listings
@@ -112,28 +112,29 @@ The top 5 make and model combinations were reviewed and noted as follows.
 - Toyota Corolla - 1,519 listings
 - Toyota Prius - 1,395 listings
 
-However this was before homogenizing the results according to the variables that could be expected to have an impact on price (age, mileage etc.)
+However, this was before homogenizing the results according to the variables that could be expected to have an impact on price (age, mileage etc.)
 
 The top 'h_strings' (the lowest level of comparable data) for each m,model was reviewed. It was noted that only 5 such strings on the top selling models had a count of over 200 listings nationwide. 
 
+## Charts of results
+
 The average price of these listings is shown in the charts below:
+
+**First bin - 308 listings. Toyota Aqua ('Dealer; 10 to 15 years old; 50,000km to 100,000km; 1500; Hybrid; Automatic'):**
 
 <img src="charts/bin_1.png" alt="bin 1" title="Bin 1 results" />
 
-**First bin - 308 listings. Toyota Aqua ('Dealer; 10 to 15 years old; 50,000km to 100,000km; 1500; Hybrid; Automatic').**
-
 Auckland is indeed the cheapest region; however it is notable that Hamilton is the most expensive given that it is only a 90 minutes down the road (and Christchurch, the furthest away, has practically the same average price as Auckland).
+
+**Second bin - 305 listings. Toyota Aqua ('Dealer; 10 to 15 years old; 100,000km to 250,000km; 1500; Hybrid; Automatic'):**
 
 <img src="charts/bin_2.png" alt="bin 2" title="Bin 2 results" />
 
-**Second bin - 305 listings. Toyota Aqua ('Dealer; 10 to 15 years old; 100,000km to 250,000km; 1500; Hybrid; Automatic')**
-
 Auckland is again the cheapest, with Christchurch practically the same average price. Wellington is the most expensive region.
-
-<img src="charts/bin_3.png" alt="bin 3" title="Bin 3 results" />
 
 **Third bin - 241 listings. Toyota Aqua ('Dealer; 6 to 7 years old; 50,000km to 100,000km; 1500; Hybrid; Automatic')**
 
+<img src="charts/bin_3.png" alt="bin 3" title="Bin 3 results" />
 
 Wellington is **significantly** more expensive than any of the other cities. There is little to separate the other three cities.
 
@@ -141,21 +142,21 @@ The count of these listings is revealing, with 144 based in Auckland and the rem
 
 It is unclear why the relative supply and demand in Wellington is dramatically different from the rest of the country - $19k vs $15.5k average price. 
 
-<img src="charts/bin_4.png" alt="bin 4" title="Bin 4 results" />
-
 **Fourth bin - 306 listings. Toyota Prius ('Dealer; 10 to 15 years old; 100,000km to 250,000km; 1800; Hybrid; Automatic')**
+
+<img src="charts/bin_4.png" alt="bin 4" title="Bin 4 results" />
 
 These results are curious since the higher prices are found in the largest cities, which is the opposite of the original hypothesis.
 
-<img src="charts/bin_5.png" alt="bin 5" title="Bin 5 results" />
-
 **Fifth bin - 241 listings. Toyota Prius ('Dealer; 10 to 15 years old; 50,000km to 100,000km; 1800; Hybrid; Automatic')**
+
+<img src="charts/bin_5.png" alt="bin 5" title="Bin 5 results" />
 
 Again, there is little difference between the three main cities, and while Hamilton has a lower price this is due to outliers in terms of the number of listings.
 
 ## Conclusion:
 
-The data does **not** support the hypothesis, at least on anything like a consistent basis. There is certainly no evidence that price is positively correlated with the distance from Auckland.
+The data unfortunately does **not** support the hypothesis, at least on anything like a consistent basis. There is certainly no evidence that price is positively correlated with the distance from Auckland.
 
 One case (bin 3) was identified where a relative shortage was found in Wellington, and whilst Auckland was significantly cheaper in that case, so were both Christchurch and Hamilton.
 
